@@ -1,4 +1,5 @@
 import {useState} from "react";
+import FingerprintJS from '@fingerprintjs/fingerprintjs';
 import "../style/login.css";
 
 const Login = () =>{
@@ -8,12 +9,21 @@ const Login = () =>{
         pass : "",
     });
 
-    function handleClick(event) {
+    const getFingerprint = async () => {
+        const fp = await FingerprintJS.load();
+        const result = await fp.get();
+        console.log(result);
+        return result.visitorId;
+    };
+
+    async function handleClick(event) {
         event.preventDefault();
         if(form.pass === "" && form.email === ""){
             alert("Ingrese datos validos!")
             console.log("La contraseña no puede estar vacia")
         }
+        const finger = await getFingerprint();
+        console.log(finger);
         
     }
 
@@ -56,6 +66,7 @@ const Login = () =>{
                 </label>
 
                 <br/>
+
                 <div className="btn-container">
                     <button
                         type="submit"
