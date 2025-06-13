@@ -1,0 +1,8 @@
+JWT_SECRET=wuajaja_xd
+DB_HOST=localhost
+DB_PORT=3306
+DB_USERNAME=root
+DB_PASSWORD=password
+DB_NAME=auth_db
+RISK_ANALYSIS_URL=http://localhost:3005/risk
+PORT=3003
