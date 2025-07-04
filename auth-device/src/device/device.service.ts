@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
 import { DeviceResponse } from "./dto/device-login-responce.dto";
 import { DeviceLogin } from "./dto/device-login.dto";
 import { InjectRepository } from '@nestjs/typeorm'
@@ -16,7 +16,7 @@ export class DeviceService{
         private readonly deviceRepository: Repository<DeviceEntity>,
         private readonly configService: ConfigService,
     ){}
-    
+
     hola(): String{
         return "Hola del Service";
     }
@@ -57,4 +57,35 @@ export class DeviceService{
             throw new Error('Token inválido o sesión expirada.');
         }
     }
+
+
+    async registerDevice(userId: number, ip: string, operatingSystem: string){
+        
+        const deviceUser = this.deviceRepository.findOne({where:{
+            user_id: userId,
+        }});
+
+        if(!deviceUser){
+            return BadRequestException;
+        };
+
+        const idUnico = generarIdSeisDigitos();
+
+        const userDevice = this.deviceRepository.create({user_id: userId, device_id: String(idUnico), ip: ip, operating_system: operatingSystem});
+
+        this.deviceRepository.save(userDevice);
+
+        return idUnico;
+    }
+
+    async deviceToUser(userId: number, deviceId: string): Promise<boolean> {
+        const device = await this.deviceRepository.findOne({
+            where: { user_id: userId, device_id: deviceId},
+        });
+        return !!device;
+    }
+}
+
+function generarIdSeisDigitos(): number {
+    return Math.floor(100000 + Math.random() * 900000);
 }

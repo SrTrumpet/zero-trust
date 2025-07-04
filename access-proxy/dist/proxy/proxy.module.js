@@ -6,26 +6,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.ProxyModule = void 0;
+const proxy_resolver_1 = require("./proxy.resolver");
+const proxy_service_1 = require("./proxy.service");
 const common_1 = require("@nestjs/common");
-const graphql_1 = require("@nestjs/graphql");
-const apollo_1 = require("@nestjs/apollo");
-const path_1 = require("path");
-const proxy_module_1 = require("./proxy/proxy.module");
-let AppModule = class AppModule {
+const config_1 = require("@nestjs/config");
+let ProxyModule = class ProxyModule {
 };
-exports.AppModule = AppModule;
-exports.AppModule = AppModule = __decorate([
+exports.ProxyModule = ProxyModule;
+exports.ProxyModule = ProxyModule = __decorate([
     (0, common_1.Module)({
-        imports: [
-            proxy_module_1.ProxyModule,
-            graphql_1.GraphQLModule.forRoot({
-                context: ({ req }) => ({ req }),
-                driver: apollo_1.ApolloDriver,
-                playground: true,
-                autoSchemaFile: (0, path_1.join)(process.cwd(), "schema.gql")
-            })
-        ],
+        imports: [config_1.ConfigModule.forRoot({ isGlobal: true })],
+        providers: [proxy_resolver_1.ProxyResolver, proxy_service_1.ProxyService]
     })
-], AppModule);
-//# sourceMappingURL=app.module.js.map
+], ProxyModule);
+;
+//# sourceMappingURL=proxy.module.js.map

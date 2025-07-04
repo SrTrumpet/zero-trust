@@ -1,14 +1,11 @@
 import { ObjectType, Field } from "@nestjs/graphql";
 
 @ObjectType()
-export class DeviceResponse{
+export class LoginResponse{
 
     @Field()
     token: string;
 
     @Field()
-    success: boolean;
-
-    @Field()
-    idDevice: number;
+    idDevice: string;
 }

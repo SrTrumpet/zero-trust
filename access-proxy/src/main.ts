@@ -7,7 +7,7 @@ async function bootstrap() {
     origin: '*', 
     credentials: true,
   });
-  await app.listen(3001);
-  console.log("Servidor corriendo...")
+  await app.listen(3003);
+  console.log(`Servidor corriendo... ${await app.getUrl()}`)
 }
 bootstrap();

@@ -1,0 +1,41 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type LoginResponse {
+  token: String!
+  idDevice: String!
+}
+
+type TokenCheck {
+  ok: Boolean!
+  userId: Int
+}
+
+type Query {
+  hello: String!
+  validateToken(token: String!): TokenCheck!
+}
+
+type Mutation {
+  login(loginInput: LoginInput!): LoginResponse!
+  register(crearUserInput: CrearUserInput!): LoginResponse!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+  time: String!
+  navigator: String!
+  operatingSystem: String!
+  zone: String!
+}
+
+input CrearUserInput {
+  email: String!
+  password: String!
+  operatingSystem: String!
+  timeZone: String!
+  navigator: String!
+  time: String!
+}

@@ -9,6 +9,7 @@ import { ProxyModule } from './proxy/proxy.module';
   imports: [
     ProxyModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
+      context: ({ req }) => ({ req }),
       driver: ApolloDriver,
       playground: true,
       autoSchemaFile: join(process.cwd(), "schema.gql")
