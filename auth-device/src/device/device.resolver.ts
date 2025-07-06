@@ -16,9 +16,16 @@ export class DeviceResolver{
     @Mutation(returns => DeviceResponse)
     loginDevice(@Args('loginDto') loginDto : DeviceLogin, @Context() context): Promise<DeviceResponse>{
         const token = this.extractTokenFromHeader(context);
+        //console.log(token);
+        //console.log(context);
         if (!token) {
         throw new Error('No se encontró el token de autorización');
     }
+        if(!loginDto){
+            throw new Error('error en el device');
+        }
+
+        console.log("----->", loginDto);
         return this.deviceService.loginDevice(loginDto, token);
     }
 
@@ -29,14 +36,16 @@ export class DeviceResolver{
 
     @Query(() => String)
     obtenerMiIp(@Context() context): string{
-        console.log(context);
+        //console.log(context);
         console.log('IP del cliente:', context.req.socket.remoteAddress);
 
         return context;
     }
 
     private extractTokenFromHeader(request: any): string | undefined {
-        const authHeader = request.headers['authorization'];
+        const context = request.req; 
+        //console.log(context);
+        const authHeader = context?.headers?.authorization;
         if (!authHeader) {
             return undefined;
         }
